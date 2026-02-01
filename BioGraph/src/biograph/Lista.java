@@ -19,6 +19,36 @@ public class Lista {
     }
     
     
+    /**
+     * Inserta un nuevo nodo al inicio de la lista con la clave especificada.
+     *
+     * @param x Nombre de usuario que se insertará como clave en el nuevo nodo.
+     */
+    public void insertar(String x) {
+        inicio = new NodoLista(x, inicio);
+    }
+
+     /**
+     * Elimina el primer nodo de la lista cuya clave sea igual al valor especificado.
+     * Si la clave no existe en la lista, no se realiza ninguna modificación.
+     *
+     * @param x Nombre de usuario que se desea eliminar.
+     */
+    public void eliminar(String x) {
+        NodoLista actual = inicio, anterior = null;
+        while (actual != null && actual.getDato() != x) {
+            anterior = actual;
+            actual = actual.getSiguiente();
+        }
+        if (actual != null) {
+            if (anterior == null) {
+                inicio = actual.getSiguiente();
+            } else {
+                anterior.setSiguiente(actual.getSiguiente());
+            }
+        }
+    }
+    
     
 
 }
