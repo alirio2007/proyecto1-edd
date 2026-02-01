@@ -6,8 +6,19 @@ package biograph;
 
 /**
  *
- * @author adcd_
+ * @author
  */
 public class Lista {
+    public NodoLista inicio;
+
+    /**
+     * Constructor por defecto que inicializa una lista vacía.
+     */
+    public Lista() {
+        inicio = null;
+    }
     
+    
+    
+
 }

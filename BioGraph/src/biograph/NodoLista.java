@@ -23,4 +23,20 @@ public class NodoLista {
         dato = x;
         siguiente = s;
     }
+    
+    public String getDato() {
+        return dato;
+    }
+
+    public void setDato(String dato) {
+        this.dato = dato;
+    }
+
+    public NodoLista getSiguiente() {
+        return siguiente;
+    }
+
+    public void setSiguiente(NodoLista siguiente) {
+        this.siguiente = siguiente;
+    }
 }
