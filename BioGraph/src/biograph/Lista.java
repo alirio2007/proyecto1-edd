@@ -49,6 +49,17 @@ public class Lista {
         }
     }
     
-    
+    public boolean busqueda(int x) {
+        NodoLista actual = inicio;
+        while (actual != null) {
+            if (actual.clave == x) return true;
+            actual = actual.sig;
+        }
+        return false;
+    }
+
+    public NodoLista obtenerInicio() {
+        return inicio;
+    }
 
 }
