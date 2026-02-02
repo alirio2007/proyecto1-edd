@@ -59,7 +59,12 @@ public class grafo {
     }
     
     
-    
+    /**
+     * Inserta un nuevo vértice al grafo.
+     * Los vértices se añaden secuencialmente comenzando desde el siguiente índice disponible.
+     * 
+     * @param n Número de vértices a insertar
+     */
     public void insertaVertice(int n) {
         if (n > maxNodos - numVertices) {
             System.out.println("Error, se supera el numero de nodos maximo del grafo");
@@ -71,6 +76,14 @@ public class grafo {
         }
     }
 
+    
+    /**
+     * Inserta una arista entre dos vertices existentes
+     * En grafos no dirigidos, la arista es bidireccional
+     * 
+     * @param i Índice del primer vértice
+     * @param j Índice del segundo vértice
+     */
     public void insertaArista(int i, int j) {
         if (i >= numVertices || j >= numVertices) {
             System.out.println("Error, el vertice no es valido");
@@ -78,6 +91,34 @@ public class grafo {
         }
         listaAdy[i].insertar(j);
         if (!dirigido) listaAdy[j].insertar(i);
+    }
+    
+    /**
+     * Imprime en consola la estructura completa del grafo.
+     * Muestra la capacidad máxima, número de vértices y la lista de adyacencia de cada vértice.
+     */
+    public void imprimirGrafo() {
+        System.out.println("Tamaño máximo del grafo: " + maxNodos);
+        System.out.println("El grafo contiene " + numVertices + " vértices:");
+        for (int i = 0; i < numVertices; i++) {
+            System.out.print("Vértice " + i + ": ");
+            escribir(listaAdy[i]);
+        }
+    }
+    
+    /**
+    * Método auxiliar que imprime los elementos de una lista de adyacencia.
+    * 
+    * @param lista Lista de adyacencia a imprimir
+    */
+    private static void escribir(Lista lista) {
+        NodoLista aux = lista.obtenerInicio();
+        while (aux != null) {
+            
+            System.out.print(aux.getDato() + " ");
+            aux = aux.getSiguiente();
+        }
+        System.out.println("FIN");
     }
     
 }
