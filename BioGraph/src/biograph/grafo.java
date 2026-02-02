@@ -59,4 +59,25 @@ public class grafo {
     }
     
     
+    
+    public void insertaVertice(int n) {
+        if (n > maxNodos - numVertices) {
+            System.out.println("Error, se supera el numero de nodos maximo del grafo");
+        } else {
+            for (int i = numVertices; i < numVertices + n; i++) {
+                listaAdy[i] = new Lista();
+            }
+            numVertices += n;
+        }
+    }
+
+    public void insertaArista(int i, int j) {
+        if (i >= numVertices || j >= numVertices) {
+            System.out.println("Error, el vertice no es valido");
+            return;
+        }
+        listaAdy[i].insertar(j);
+        if (!dirigido) listaAdy[j].insertar(i);
+    }
+    
 }

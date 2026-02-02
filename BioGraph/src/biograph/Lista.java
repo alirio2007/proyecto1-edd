@@ -22,9 +22,9 @@ public class Lista {
     /**
      * Inserta un nuevo nodo al inicio de la lista con la clave especificada.
      *
-     * @param x Nombre de usuario que se insertará como clave en el nuevo nodo.
+     * @param x clave en el nuevo nodo.
      */
-    public void insertar(String x) {
+    public void insertar(int x) {
         inicio = new NodoLista(x, inicio);
     }
 
@@ -32,9 +32,9 @@ public class Lista {
      * Elimina el primer nodo de la lista cuya clave sea igual al valor especificado.
      * Si la clave no existe en la lista, no se realiza ninguna modificación.
      *
-     * @param x Nombre de usuario que se desea eliminar.
+     * @param x clave que se desea eliminar.
      */
-    public void eliminar(String x) {
+    public void eliminar(int x) {
         NodoLista actual = inicio, anterior = null;
         while (actual != null && actual.getDato() != x) {
             anterior = actual;
@@ -52,8 +52,10 @@ public class Lista {
     public boolean busqueda(int x) {
         NodoLista actual = inicio;
         while (actual != null) {
-            if (actual.clave == x) return true;
-            actual = actual.sig;
+            if (actual.getDato() == x){
+                return true;
+            }
+            actual = actual.getSiguiente();
         }
         return false;
     }

@@ -9,7 +9,7 @@ package biograph;
  * @author 
  */
 public class NodoLista {
-    public String dato;
+    public int dato;
     public NodoLista siguiente;
     
     
@@ -19,16 +19,16 @@ public class NodoLista {
      * @param x dato
      * @param s Siguiente nodo.
      */
-    public NodoLista(String x, NodoLista s) {
+    public NodoLista(int x, NodoLista s) {
         dato = x;
         siguiente = s;
     }
     
-    public String getDato() {
+    public int getDato() {
         return dato;
     }
 
-    public void setDato(String dato) {
+    public void setDato(int dato) {
         this.dato = dato;
     }
 
