@@ -22,4 +22,36 @@ public class Cola<T> {
         iN = 0;
 
     }
+    
+    public boolean esVacia() {
+        return iN == 0;
+    }
+    
+    public void encolar(T x) {
+        NodoCola<T> nuevo = new NodoCola<>(x);
+        if (esVacia()) {
+            pFirst = nuevo;
+        } else {
+            pLast.siguiente = nuevo;
+        }
+        pLast = nuevo;
+        iN++;
+    }
+    
+    public void desencolar() {
+        if (esVacia()) {
+            throw new IllegalStateException("La cola está vacía");
+        }
+        NodoCola<T> temp = pFirst;
+        pFirst = pFirst.siguiente;
+        temp.siguiente = null;
+        if (pFirst == null) {
+            pLast = null;
+        }
+        iN--;
+    }
+    
+    public int tamanio() {
+        return iN;
+    }
 }
