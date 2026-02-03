@@ -23,10 +23,18 @@ public class Cola<T> {
 
     }
     
+    /**
+     * Verifica si la cola está vacía.
+     * @return true si está vacía, false en caso contrario.
+     */
     public boolean esVacia() {
         return iN == 0;
     }
     
+    /**
+     * Inserta un elemento al final de la cola.
+     * @param x Valor a insertar.
+     */
     public void encolar(T x) {
         NodoCola<T> nuevo = new NodoCola<>(x);
         if (esVacia()) {
@@ -38,9 +46,13 @@ public class Cola<T> {
         iN++;
     }
     
+    /**
+     * Elimina el primer elemento de la cola.
+     * Lanza excepción si está vacía.
+     */
     public void desencolar() {
         if (esVacia()) {
-            throw new IllegalStateException("La cola está vacía");
+            throw new IllegalStateException("La cola está vacia");
         }
         NodoCola<T> temp = pFirst;
         pFirst = pFirst.siguiente;
@@ -51,6 +63,10 @@ public class Cola<T> {
         iN--;
     }
     
+    /**
+     * Retorna el número de elementos en la cola.
+     * @return Tamaño de la cola.
+     */
     public int tamanio() {
         return iN;
     }
