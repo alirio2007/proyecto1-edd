@@ -11,7 +11,7 @@ package biograph;
 public class Cola<T> {
     private NodoCola<T> pFirst;
     private NodoCola<T> pLast;
-    private int iN;
+    private int size;
 
     /**
      * Constructor
@@ -19,7 +19,7 @@ public class Cola<T> {
     public Cola() {
         pFirst = null;
         pLast = null;
-        iN = 0;
+        size = 0;
 
     }
     
@@ -28,7 +28,7 @@ public class Cola<T> {
      * @return true si está vacía, false en caso contrario.
      */
     public boolean esVacia() {
-        return iN == 0;
+        return size == 0;
     }
     
     /**
@@ -43,7 +43,7 @@ public class Cola<T> {
             pLast.siguiente = nuevo;
         }
         pLast = nuevo;
-        iN++;
+        size++;
     }
     
     /**
@@ -60,7 +60,7 @@ public class Cola<T> {
         if (pFirst == null) {
             pLast = null;
         }
-        iN--;
+        size--;
     }
     
     /**
@@ -68,7 +68,7 @@ public class Cola<T> {
      * @return Tamaño de la cola.
      */
     public int tamanio() {
-        return iN;
+        return size;
     }
     
     public T desencolarConRetorno() {
@@ -77,7 +77,7 @@ public class Cola<T> {
         }
         T valor = pFirst.valor;
         pFirst = pFirst.siguiente;
-        iN--;
+        size--;
         if (esVacia()) {
             pLast = null;
         }
