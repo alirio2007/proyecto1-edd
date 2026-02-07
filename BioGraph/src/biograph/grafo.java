@@ -1,124 +1,149 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package biograph;
 
 /**
- *
- * @author 
+ * Grafo para modelar interacciones proteicas con restricción de no usar Collections.
  */
 public class grafo {
     private boolean dirigido;
-    private int maxNodos;
-    private int numVertices;
-    private Lista[] listaAdy;
+    private int capacidadMaxima;
+    private int numProteinas;
+    private String[] nombresProteinas;      // Arreglo de nombres
+    private boolean[] activa;               // Proteína eliminada o activa
+    private Lista<Arista>[] listaAdy;       // Lista de adyacencia
     
     /**
-     * Constructor de la clase Grafo.
-     * 
-     * @param n La capacidad maxima inicial de vertices del grafo
+     * Constructor del grafo proteico.
+     * @param capacidad Capacidad máxima de proteínas
+     * @param dirigido true si el grafo es dirigido
      */
-    public grafo(int n) {
-        this.dirigido = false;
-        this.maxNodos = n;
-        this.numVertices = 0;
-        this.listaAdy = new Lista[n];
-    }
-
-    public boolean isDirigido() {
-        return dirigido;
-    }
-
-    public void setDirigido(boolean dirigido) {
+    public grafo(int capacidad, boolean dirigido) {
         this.dirigido = dirigido;
+        this.capacidadMaxima = capacidad;
+        this.numProteinas = 0;
+        this.nombresProteinas = new String[capacidad];
+        this.activa = new boolean[capacidad];
+        this.listaAdy = new Lista[capacidad];
+        
+        for (int i = 0; i < capacidad; i++) {
+            listaAdy[i] = new Lista<Arista>();
+            activa[i] = false;  // Inicialmente no hay proteínas
+        }
     }
-
-    public int getMaxNodos() {
-        return maxNodos;
-    }
-
-    public void setMaxNodos(int maxNodos) {
-        this.maxNodos = maxNodos;
-    }
-
-    public int getNumVertices() {
-        return numVertices;
-    }
-
-    public void setNumVertices(int numVertices) {
-        this.numVertices = numVertices;
-    }
-
-    public Lista[] getListaAdy() {
-        return listaAdy;
-    }
-
-    public void setListaAdy(Lista[] listaAdy) {
-        this.listaAdy = listaAdy;
-    }
-    
     
     /**
-     * Inserta un nuevo vértice al grafo.
-     * Los vértices se añaden secuencialmente comenzando desde el siguiente índice disponible.
-     * 
-     * @param n Número de vértices a insertar
+     * Busca el índice de una proteína por nombre (búsqueda lineal).
      */
-    public void insertaVertice(int n) {
-        if (n > maxNodos - numVertices) {
-            System.out.println("Error, se supera el numero de nodos maximo del grafo");
-        } else {
-            for (int i = numVertices; i < numVertices + n; i++) {
-                listaAdy[i] = new Lista();
+    private int buscarIndiceProteina(String nombre) {
+        for (int i = 0; i < numProteinas; i++) {
+            if (activa[i] && nombresProteinas[i].equals(nombre)) {
+                return i;
             }
-            numVertices += n;
         }
+        return -1;  // No encontrado
     }
-
     
     /**
-     * Inserta una arista entre dos vertices existentes
-     * En grafos no dirigidos, la arista es bidireccional
-     * 
-     * @param i Índice del primer vértice
-     * @param j Índice del segundo vértice
+     * Agrega una nueva proteína si hay espacio.
      */
-    public void insertaArista(int i, int j) {
-        if (i >= numVertices || j >= numVertices) {
-            System.out.println("Error, el vertice no es valido");
-            return;
+    public int agregarProteina(String nombre) {
+        // Verificar si ya existe
+        int idxExistente = buscarIndiceProteina(nombre);
+        if (idxExistente != -1) {
+            return idxExistente;
         }
-        listaAdy[i].insertar(j);
-        if (!dirigido) listaAdy[j].insertar(i);
+        
+        // Buscar slot disponible (alguna proteína eliminada)
+        for (int i = 0; i < numProteinas; i++) {
+            if (!activa[i]) {
+                nombresProteinas[i] = nombre;
+                activa[i] = true;
+                listaAdy[i] = new Lista<Arista>(); // Reiniciar lista
+                return i;
+            }
+        }
+        
+        // Agregar al final si hay capacidad
+        if (numProteinas < capacidadMaxima) {
+            nombresProteinas[numProteinas] = nombre;
+            activa[numProteinas] = true;
+            listaAdy[numProteinas] = new Lista<Arista>();
+            return numProteinas++;
+        }
+        
+        throw new RuntimeException("Capacidad máxima del grafo excedida");
     }
     
     /**
-     * Imprime en consola la estructura completa del grafo.
-     * Muestra la capacidad máxima, número de vértices y la lista de adyacencia de cada vértice.
+     * Agrega una interacción entre dos proteínas con peso.
      */
-    public void imprimirGrafo() {
-        System.out.println("Tamaño máximo del grafo: " + maxNodos);
-        System.out.println("El grafo contiene " + numVertices + " vértices:");
-        for (int i = 0; i < numVertices; i++) {
-            System.out.print("Vértice " + i + ": ");
-            escribir(listaAdy[i]);
+    public void agregarInteraccion(String proteinaA, String proteinaB, int peso) {
+        int idxA = agregarProteina(proteinaA);
+        int idxB = agregarProteina(proteinaB);
+        
+        // Verificar si la arista ya existe
+        if (!existeArista(idxA, idxB)) {
+            listaAdy[idxA].insertar(new Arista(idxB, peso));
+            if (!dirigido) {
+                listaAdy[idxB].insertar(new Arista(idxA, peso));
+            }
         }
     }
     
     /**
-    * Método auxiliar que imprime los elementos de una lista de adyacencia.
-    * 
-    * @param lista Lista de adyacencia a imprimir
-    */
-    private static void escribir(Lista lista) {
-        NodoLista aux = lista.obtenerInicio();
-        while (aux != null) {
-            
-            System.out.print(aux.getDato() + " ");
-            aux = aux.getSiguiente();
+     * Verifica si existe arista entre dos índices.
+     */
+    private boolean existeArista(int origen, int destino) {
+        Lista<Arista> adyacentes = listaAdy[origen];
+        NodoLista<Arista> actual = adyacentes.obtenerInicio();
+        
+        while (actual != null) {
+            if (actual.getDato().getDestino() == destino) {
+                return true;
+            }
+            actual = actual.getSiguiente();
         }
-        System.out.println("FIN");
+        return false;
     }
+    
+    /**
+     * Elimina una proteína (simula efecto de fármaco).
+     */
+    public void eliminarProteina(String nombre) {
+        int idx = buscarIndiceProteina(nombre);
+        if (idx == -1) return;
+        
+        // Marcar como inactiva
+        activa[idx] = false;
+        
+        // Eliminar todas las aristas que apuntan a esta proteína
+        for (int i = 0; i < numProteinas; i++) {
+            if (activa[i]) {
+                eliminarArista(i, idx);
+            }
+        }
+    }
+    
+    /**
+     * Elimina arista de origen a destino.
+     */
+    private void eliminarArista(int origen, int destino) {
+        Lista<Arista> lista = listaAdy[origen];
+        NodoLista<Arista> actual = lista.obtenerInicio();
+        NodoLista<Arista> anterior = null;
+        
+        while (actual != null) {
+            if (actual.getDato().getDestino() == destino) {
+                if (anterior == null) {
+                    lista.inicio = actual.getSiguiente();
+                } else {
+                    anterior.setSiguiente(actual.getSiguiente());
+                }
+                return;
+            }
+            anterior = actual;
+            actual = actual.getSiguiente();
+        }
+    }
+    
     
 }
