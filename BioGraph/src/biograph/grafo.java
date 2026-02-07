@@ -163,6 +163,17 @@ public class grafo {
         }
         return activas;
     }
+    
+    /**
+     * Cuenta proteínas activas.
+     */
+    private int contarProteinasActivas() {
+        int count = 0;
+        for (int i = 0; i < numProteinas; i++) {
+            if (activa[i]) count++;
+        }
+        return count;
+    }
 
     
 }
