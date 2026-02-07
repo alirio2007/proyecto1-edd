@@ -70,4 +70,17 @@ public class Cola<T> {
     public int tamanio() {
         return iN;
     }
+    
+    public T desencolarConRetorno() {
+        if (esVacia()) {
+            return null;
+        }
+        T valor = pFirst.valor;
+        pFirst = pFirst.siguiente;
+        iN--;
+        if (esVacia()) {
+            pLast = null;
+        }
+        return valor;
+    }
 }
