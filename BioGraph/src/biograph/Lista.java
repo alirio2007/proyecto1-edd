@@ -8,8 +8,8 @@ package biograph;
  *
  * @author
  */
-public class Lista {
-    public NodoLista inicio;
+public class Lista<T> {
+    public NodoLista<T> inicio;
 
     /**
      * Constructor por defecto que inicializa una lista vacía.
@@ -24,8 +24,8 @@ public class Lista {
      *
      * @param x clave en el nuevo nodo.
      */
-    public void insertar(int x) {
-        inicio = new NodoLista(x, inicio);
+    public void insertar(T x) {
+        inicio = new NodoLista<T>(x, inicio);
     }
 
      /**
@@ -34,9 +34,9 @@ public class Lista {
      *
      * @param x clave que se desea eliminar.
      */
-    public void eliminar(int x) {
-        NodoLista actual = inicio, anterior = null;
-        while (actual != null && actual.getDato() != x) {
+    public void eliminar(T x) {
+        NodoLista<T> actual = inicio, anterior = null;
+        while (actual != null && !actual.getDato().equals(x)) {
             anterior = actual;
             actual = actual.getSiguiente();
         }
@@ -49,10 +49,10 @@ public class Lista {
         }
     }
     
-    public boolean busqueda(int x) {
-        NodoLista actual = inicio;
+    public boolean busqueda(T x) {
+        NodoLista<T> actual = inicio;
         while (actual != null) {
-            if (actual.getDato() == x){
+            if (actual.getDato().equals(x)) {
                 return true;
             }
             actual = actual.getSiguiente();
@@ -60,8 +60,7 @@ public class Lista {
         return false;
     }
 
-    public NodoLista obtenerInicio() {
+    public NodoLista<T> obtenerInicio() {
         return inicio;
     }
-
 }

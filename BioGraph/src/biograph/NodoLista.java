@@ -8,9 +8,9 @@ package biograph;
  *
  * @author 
  */
-public class NodoLista {
-    public int dato;
-    public NodoLista siguiente;
+public class NodoLista<T> {
+    public T dato;
+    public NodoLista<T> siguiente;
     
     
     /**
@@ -19,24 +19,24 @@ public class NodoLista {
      * @param x dato
      * @param s Siguiente nodo.
      */
-    public NodoLista(int x, NodoLista s) {
+    public NodoLista(T x, NodoLista<T> s) {
         dato = x;
         siguiente = s;
     }
     
-    public int getDato() {
+    public T getDato() {
         return dato;
     }
 
-    public void setDato(int dato) {
+    public void setDato(T dato) {
         this.dato = dato;
     }
 
-    public NodoLista getSiguiente() {
+    public NodoLista<T> getSiguiente() {
         return siguiente;
     }
 
-    public void setSiguiente(NodoLista siguiente) {
+    public void setSiguiente(NodoLista<T> siguiente) {
         this.siguiente = siguiente;
     }
 }
