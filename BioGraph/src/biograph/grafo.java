@@ -145,5 +145,24 @@ public class grafo {
         }
     }
     
+    /**
+     * Obtiene todas las proteínas activas.
+     */
+    public String[] obtenerProteinasActivas() {
+        int count = 0;
+        for (int i = 0; i < numProteinas; i++) {
+            if (activa[i]) count++;
+        }
+        
+        String[] activas = new String[count];
+        int j = 0;
+        for (int i = 0; i < numProteinas; i++) {
+            if (activa[i]) {
+                activas[j++] = nombresProteinas[i];
+            }
+        }
+        return activas;
+    }
+
     
 }
