@@ -248,7 +248,10 @@ public class grafo {
         return resultado;
     }
 
-    
+    /**
+     * BFS para encontrar complejos proteicos - componentes conexos.
+     */
+
     public Lista<Lista<String>> encontrarComplejosProteicos() {
         boolean[] visitado = new boolean[capacidadMaxima];
         Lista<Lista<String>> complejos = new Lista<>();
@@ -266,6 +269,29 @@ public class grafo {
         return complejos;
     }
     
+    /**
+     * BFS.
+     */
+    private void bfs(int inicio, boolean[] visitado, Lista<String> componente) {
+        Cola<Integer> cola = new Cola<>();
+        cola.encolar(inicio);
+        visitado[inicio] = true;
+        
+        while (!cola.esVacia()) {
+            int actual = ((Cola<Integer>) cola).desencolarConRetorno();
+            componente.insertar(nombresProteinas[actual]);
+            
+            NodoLista<Arista> nodo = listaAdy[actual].obtenerInicio();
+            while (nodo != null) {
+                int vecino = nodo.getDato().getDestino();
+                if (activa[vecino] && !visitado[vecino]) {
+                    visitado[vecino] = false;
+                    cola.encolar(vecino);
+                }
+                nodo = nodo.getSiguiente();
+            }
+        }
+    }
 
     
     
