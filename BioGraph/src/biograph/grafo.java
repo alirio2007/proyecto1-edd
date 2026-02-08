@@ -285,7 +285,7 @@ public class grafo {
             while (nodo != null) {
                 int vecino = nodo.getDato().getDestino();
                 if (activa[vecino] && !visitado[vecino]) {
-                    visitado[vecino] = false;
+                    visitado[vecino] = true;
                     cola.encolar(vecino);
                 }
                 nodo = nodo.getSiguiente();
