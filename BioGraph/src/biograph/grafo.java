@@ -202,6 +202,51 @@ public class grafo {
         }
         return count;
     }
+    
+    
+    /**
+     * Identific proteinas con mayor grado - hubs.
+     */
+    public Lista<String> identificarHubs(int cantidad) {
+        // Arreglo para almacenar (nombre, grado)
+        String[] nombresHubs = new String[contarProteinasActivas()];
+        int[] grados = new int[contarProteinasActivas()];
+        int idx = 0;
+        
+        // Calcular grados
+        for (int i = 0; i < numProteinas; i++) {
+            if (activa[i]) {
+                nombresHubs[idx] = nombresProteinas[i];
+                grados[idx] = calcularGrado(i);
+                idx++;
+            }
+        }
+        
+        // Ordenar por grado descendente
+        for (int i = 0; i < idx - 1; i++) {
+            for (int j = 0; j < idx - i - 1; j++) {
+                if (grados[j] < grados[j + 1]) {
+                    // Intercambiar grados
+                    int tempGrado = grados[j];
+                    grados[j] = grados[j + 1];
+                    grados[j + 1] = tempGrado;
+                    
+                    // Intercambiar nombres
+                    String tempNombre = nombresHubs[j];
+                    nombresHubs[j] = nombresHubs[j + 1];
+                    nombresHubs[j + 1] = tempNombre;
+                }
+            }
+        }
+        
+        // Crear lista resultado
+        Lista<String> resultado = new Lista<>();
+        for (int i = 0; i < Math.min(cantidad, idx); i++) {
+            resultado.insertar(nombresHubs[i]);
+        }
+        
+        return resultado;
+    }
 
 
     
