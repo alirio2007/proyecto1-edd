@@ -292,6 +292,80 @@ public class grafo {
             }
         }
     }
+    
+    
+    /**
+    * Dijkstra para encontrar ruta más corta.
+    */
+    public Lista<String> encontrarRutaMasCorta(String origen, String destino) {
+        int idxOrigen = buscarIndiceProteina(origen);
+        int idxDestino = buscarIndiceProteina(destino);
+        
+        if (idxOrigen == -1 || idxDestino == -1) {
+            return new Lista<>();
+        }
+        
+        int[] distancias = new int[capacidadMaxima];
+        int[] predecesores = new int[capacidadMaxima];
+        boolean[] procesado = new boolean[capacidadMaxima];
+        
+        // Inicializar
+        for (int i = 0; i < capacidadMaxima; i++) {
+            distancias[i] = Integer.MAX_VALUE;
+            predecesores[i] = -1;
+            procesado[i] = false;
+        }
+        distancias[idxOrigen] = 0;
+        
+        // Dijkstra
+        for (int count = 0; count < contarProteinasActivas(); count++) {
+            // Encontrar vértice no procesado con distancia mínima
+            int u = -1;
+            int minDist = Integer.MAX_VALUE;
+            for (int i = 0; i < numProteinas; i++) {
+                if (activa[i] && !procesado[i] && distancias[i] < minDist) {
+                    minDist = distancias[i];
+                    u = i;
+                }
+            }
+            
+            if (u == -1 || u == idxDestino) break;
+            procesado[u] = true;
+            
+            // Relajar aristas
+            NodoLista<Arista> nodo = listaAdy[u].obtenerInicio();
+            while (nodo != null) {
+                Arista arista = nodo.getDato();
+                int v = arista.getDestino();
+                if (activa[v] && !procesado[v]) {
+                    int nuevaDist = distancias[u] + arista.getPeso();
+                    if (nuevaDist < distancias[v]) {
+                        distancias[v] = nuevaDist;
+                        predecesores[v] = u;
+                    }
+                }
+                nodo = nodo.getSiguiente();
+            }
+        }
+        
+        // Reconstruir ruta
+        Lista<String> ruta = new Lista<>();
+        int actual = idxDestino;
+        while (actual != -1) {
+            ruta.insertar(nombresProteinas[actual]);
+            actual = predecesores[actual];
+        }
+        
+        // Verificar si encontro ruta
+        if (ruta.obtenerInicio() == null || 
+            !ruta.obtenerInicio().getDato().equals(origen)) {
+            return new Lista<>();
+        }
+        
+        return ruta;
+    }
+    
+    
 
     
     
