@@ -174,6 +174,35 @@ public class grafo {
         }
         return count;
     }
+    
+    /**
+     * Calcula grado de un vértice.
+     */
+    private int calcularGrado(int indice) {
+        int grado = 0;
+        NodoLista<Arista> actual = listaAdy[indice].obtenerInicio();
+        while (actual != null) {
+            grado++;
+            actual = actual.getSiguiente();
+        }
+        return grado;
+    }
+    
+    
+    
+    /**
+     * Cuenta elementos en una lista.
+     */
+    private int contarElementos(Lista<String> lista) {
+        int count = 0;
+        NodoLista<String> actual = lista.obtenerInicio();
+        while (actual != null) {
+            count++;
+            actual = actual.getSiguiente();
+        }
+        return count;
+    }
+
 
     
 }
