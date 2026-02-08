@@ -248,6 +248,25 @@ public class grafo {
         return resultado;
     }
 
+    
+    public Lista<Lista<String>> encontrarComplejosProteicos() {
+        boolean[] visitado = new boolean[capacidadMaxima];
+        Lista<Lista<String>> complejos = new Lista<>();
+        
+        for (int i = 0; i < numProteinas; i++) {
+            if (activa[i] && !visitado[i]) {
+                Lista<String> complejo = new Lista<>();
+                bfs(i, visitado, complejo);
+                
+                if (contarElementos(complejo) > 1) {
+                    complejos.insertar(complejo);
+                }
+            }
+        }
+        return complejos;
+    }
+    
 
+    
     
 }
