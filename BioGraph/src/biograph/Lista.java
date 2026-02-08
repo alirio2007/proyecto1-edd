@@ -6,9 +6,12 @@ package biograph;
 
 /**
  *
- * @author
+ * @author Gianfranco, Adrian, Alirio
  */
 public class Lista<T> {
+    /**
+     * Atributos
+     */
     public NodoLista<T> inicio;
 
     /**
@@ -49,6 +52,12 @@ public class Lista<T> {
         }
     }
     
+    /**
+     * Busca un elemento en la lista.
+     * 
+     * @param x Elemento a buscar
+     * @return true si el elemento se encuentra en la lista, false en caso contrario
+     */
     public boolean busqueda(T x) {
         NodoLista<T> actual = inicio;
         while (actual != null) {
@@ -60,6 +69,11 @@ public class Lista<T> {
         return false;
     }
 
+    /**
+     * Obtiene el primer nodo de la lista.
+     * 
+     * @return Referencia al primer nodo de la lista
+     */
     public NodoLista<T> obtenerInicio() {
         return inicio;
     }

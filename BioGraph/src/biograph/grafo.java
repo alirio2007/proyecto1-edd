@@ -1,9 +1,13 @@
 package biograph;
 
 /**
- * Grafo para modelar interacciones proteicas con restricción de no usar Collections.
+ *
+ * @author Gianfranco, Adrian, Alirio
  */
 public class grafo {
+    /**
+     * Atributos
+     */
     private boolean dirigido;
     private int capacidadMaxima;
     private int numProteinas;
@@ -31,7 +35,10 @@ public class grafo {
     }
     
     /**
-     * Busca el índice de una proteína por nombre (búsqueda lineal).
+     * Busca el indice de una proteina por nombre (busqueda lineal).
+     * 
+     * @param nombre Nombre de la proteína a buscar
+     * @return Índice de la proteína o -1 si no se encuentra
      */
     private int buscarIndiceProteina(String nombre) {
         for (int i = 0; i < numProteinas; i++) {
@@ -44,6 +51,9 @@ public class grafo {
     
     /**
      * Agrega una nueva proteína si hay espacio.
+     * 
+     * @param nombre Nombre de la proteina a agregar
+     * @return indice asignado a la proteína
      */
     public int agregarProteina(String nombre) {
         // Verificar si ya existe
@@ -75,6 +85,10 @@ public class grafo {
     
     /**
      * Agrega una interacción entre dos proteínas con peso.
+     * 
+     * @param proteinaA Nombre de la primera proteína
+     * @param proteinaB Nombre de la segunda proteína
+     * @param peso Peso o costo de la interacción
      */
     public void agregarInteraccion(String proteinaA, String proteinaB, int peso) {
         int idxA = agregarProteina(proteinaA);
@@ -91,6 +105,10 @@ public class grafo {
     
     /**
      * Verifica si existe arista entre dos índices.
+     * 
+     * @param origen indice del vertice origen
+     * @param destino indice del vertice destino
+     * @return true si existe la arista, false en caso contrario
      */
     private boolean existeArista(int origen, int destino) {
         Lista<Arista> adyacentes = listaAdy[origen];
@@ -107,6 +125,8 @@ public class grafo {
     
     /**
      * Elimina una proteína (simula efecto de fármaco).
+     * 
+     * @param nombre Nombre de la proteina a eliminar
      */
     public void eliminarProteina(String nombre) {
         int idx = buscarIndiceProteina(nombre);
@@ -125,6 +145,9 @@ public class grafo {
     
     /**
      * Elimina arista de origen a destino.
+     * 
+     * @param origen indice del vertice origen
+     * @param destino indice del vertice destino
      */
     private void eliminarArista(int origen, int destino) {
         Lista<Arista> lista = listaAdy[origen];
@@ -147,6 +170,9 @@ public class grafo {
     
     /**
      * Obtiene todas las proteínas activas.
+     * 
+     * 
+     * @return Arreglo de nombres de proteínas activas
      */
     public String[] obtenerProteinasActivas() {
         int count = 0;
@@ -166,6 +192,8 @@ public class grafo {
     
     /**
      * Cuenta proteínas activas.
+     * 
+     * @return Numero de proteinas activas
      */
     private int contarProteinasActivas() {
         int count = 0;
@@ -177,6 +205,9 @@ public class grafo {
     
     /**
      * Calcula grado de un vértice.
+     * 
+     * @param indice indice del vertice
+     * @return Grado del vertice
      */
     private int calcularGrado(int indice) {
         int grado = 0;
@@ -192,6 +223,9 @@ public class grafo {
     
     /**
      * Cuenta elementos en una lista.
+     * 
+     * @param lista Lista a contar
+     * @return Numero de elementos en la lista
      */
     private int contarElementos(Lista<String> lista) {
         int count = 0;
@@ -206,6 +240,9 @@ public class grafo {
     
     /**
      * Identific proteinas con mayor grado - hubs.
+     * 
+     * @param cantidad Numero maximo de hubs a identificar
+     * @return Lista de nombres de las proteinas identificadas como hubs
      */
     public Lista<String> identificarHubs(int cantidad) {
         // Arreglo para almacenar (nombre, grado)
@@ -249,7 +286,10 @@ public class grafo {
     }
 
     /**
-     * BFS para encontrar complejos proteicos - componentes conexos.
+     * Encuentra todos los complejos proteicos (componentes conexos) en el grafo
+     * Utiliza el algoritmo BFS para identificar grupos de proteínas conectadas
+     * 
+     * @return Lista de listas, donde cada sublista representa un complejo proteico
      */
 
     public Lista<Lista<String>> encontrarComplejosProteicos() {
@@ -270,7 +310,11 @@ public class grafo {
     }
     
     /**
-     * BFS.
+     * algoritmo BFS (Busqueda en Anchura).
+     * 
+     * @param inicio indice del vertice inicial
+     * @param visitado Arreglo de vertices visitados
+     * @param componente Lista donde se almacenarán los vertices del componente
      */
     private void bfs(int inicio, boolean[] visitado, Lista<String> componente) {
         Cola<Integer> cola = new Cola<>();
@@ -295,8 +339,12 @@ public class grafo {
     
     
     /**
-    * Dijkstra para encontrar ruta más corta.
-    */
+     * Encuentra la ruta más corta entre dos proteínas usando el algoritmo de Dijkstra.
+     * 
+     * @param origen Nombre de la proteína origen
+     * @param destino Nombre de la proteína destino
+     * @return Lista con la secuencia de proteínas en la ruta más corta
+     */
     public Lista<String> encontrarRutaMasCorta(String origen, String destino) {
         int idxOrigen = buscarIndiceProteina(origen);
         int idxDestino = buscarIndiceProteina(destino);

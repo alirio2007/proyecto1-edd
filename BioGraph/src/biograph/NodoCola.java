@@ -6,9 +6,12 @@ package biograph;
 
 /**
  *
- * @author
+ * @author Gianfranco, Adrian, Alirio
  */
 class NodoCola<T> {
+    /**
+     * Atributos
+     */
     T valor;
     NodoCola<T> siguiente;
 

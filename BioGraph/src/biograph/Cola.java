@@ -6,9 +6,12 @@ package biograph;
 
 /**
  *
- * @author
+ * @author Gianfranco, Adrian, Alirio
  */
 public class Cola<T> {
+    /**
+     * Atributos
+     */
     private NodoCola<T> pFirst;
     private NodoCola<T> pLast;
     private int size;
@@ -71,6 +74,11 @@ public class Cola<T> {
         return size;
     }
     
+    /**
+     * Elimina y retorna el primer elemento de la cola.
+     * 
+     * @return El primer elemento de la cola, o null si la cola está vacía
+     */
     public T desencolarConRetorno() {
         if (esVacia()) {
             return null;

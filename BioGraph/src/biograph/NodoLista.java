@@ -6,9 +6,12 @@ package biograph;
 
 /**
  *
- * @author 
+ * @author Gianfranco, Adrian, Alirio
  */
 public class NodoLista<T> {
+    /**
+     * Atributos
+     */
     public T dato;
     public NodoLista<T> siguiente;
     
@@ -24,6 +27,9 @@ public class NodoLista<T> {
         siguiente = s;
     }
     
+    /**
+     * getter y setter
+     */
     public T getDato() {
         return dato;
     }
