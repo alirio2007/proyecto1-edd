@@ -27,11 +27,49 @@ public class interfaz extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        deteccion = new javax.swing.JButton();
+        carga = new javax.swing.JButton();
+        ruta = new javax.swing.JButton();
+        mostrar = new javax.swing.JButton();
+        actualizar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        pantalla = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setText("BioGraph");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 110, 20));
+
+        jLabel2.setText("Adrian, Alirio, Gianfranco");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
+
+        deteccion.setText("Detección de Complejos Proteicos");
+        jPanel1.add(deteccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, -1));
+
+        carga.setText("Cargar archivo");
+        jPanel1.add(carga, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
+
+        ruta.setText("Ruta Metabólica más Corta:");
+        jPanel1.add(ruta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
+
+        mostrar.setText("Mostrar grafo");
+        jPanel1.add(mostrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, -1));
+
+        actualizar.setText("Actualizar repositorio");
+        jPanel1.add(actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, -1, -1));
+
+        pantalla.setColumns(20);
+        pantalla.setRows(5);
+        jScrollPane1.setViewportView(pantalla);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, 400, 390));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 540));
 
         pack();
@@ -73,6 +111,15 @@ public class interfaz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton actualizar;
+    private javax.swing.JButton carga;
+    private javax.swing.JButton deteccion;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton mostrar;
+    private javax.swing.JTextArea pantalla;
+    private javax.swing.JButton ruta;
     // End of variables declaration//GEN-END:variables
 }
