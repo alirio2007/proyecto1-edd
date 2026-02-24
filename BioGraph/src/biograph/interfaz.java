@@ -4,19 +4,140 @@
  */
 package biograph;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
+import java.io.IOException;
+
 /**
- *
+ * Interfaz gráfica principal de BioGraph
  * @author Gianfranco, Adrian, Alirio
  */
 public class interfaz extends javax.swing.JFrame {
+    
+    // ====================================================
+    // ATRIBUTOS DE LA CLASE
+    // ====================================================
+    private grafo miGrafo;
+    private File archivoActual;
+    private boolean cambiosGuardados;
 
     /**
      * Creates new form interfaz
      */
     public interfaz() {
+        // Inicializar atributos
+        miGrafo = new grafo(100, false);
+        archivoActual = null;
+        cambiosGuardados = true;
+        
+        // Inicializar componentes visuales
         initComponents();
+        
+        // Configuraciones adicionales
+        this.setTitle("BioGraph - Análisis de Interacciones Proteicas");
+        this.setLocationRelativeTo(null);
+        pantalla.setEditable(false);
+        
+        // Configurar eventos
+        configurarEventos();
+        
+        // Mostrar mensaje de bienvenida
+        mostrarMensajeBienvenida();
     }
-
+    
+    // ====================================================
+    // MÉTODOS DE CONFIGURACIÓN
+    // ====================================================
+    
+    private void configurarEventos() {
+        // Botones existentes
+        carga.addActionListener(e -> cargarArchivo());
+        actualizar.addActionListener(e -> guardarArchivo());
+        deteccion.addActionListener(e -> detectarComplejos());
+        ruta.addActionListener(e -> encontrarRuta());
+        mostrar.addActionListener(e -> mostrarGrafo());
+        
+        
+    }
+    
+    private void mostrarMensajeBienvenida() {
+        pantalla.setText("BIENVENIDO A BIOGRAPH\n");
+        pantalla.append("======================\n\n");
+        pantalla.append("Sistema de Análisis de Interacciones Proteicas\n\n");
+        pantalla.append("Funcionalidades:\n");
+        pantalla.append("• Cargar archivo: Carga archivo CSV\n");
+        pantalla.append("• Actualizar: Guarda cambios\n");
+        pantalla.append("• Detectar complejos: BFS\n");
+        pantalla.append("• Ruta más corta: Dijkstra\n");
+        pantalla.append("• Mostrar grafo: Visualización con GraphStream\n");
+        pantalla.append("• (Próximamente) Agregar/Eliminar aristas\n");
+    }
+    
+    // ====================================================
+    // MÉTODOS DE FUNCIONALIDAD PRINCIPAL (YA EXISTENTES)
+    // ====================================================
+    
+    private void cargarArchivo() {
+        if (!cambiosGuardados) {
+            int opcion = JOptionPane.showConfirmDialog(this,
+                "Hay cambios sin guardar. ¿Desea guardarlos?",
+                "Cambios sin guardar",
+                JOptionPane.YES_NO_CANCEL_OPTION);
+            
+            if (opcion == JOptionPane.CANCEL_OPTION) return;
+            if (opcion == JOptionPane.YES_OPTION) {
+                guardarArchivo();
+            }
+        }
+        
+        JFileChooser fileChooser = new JFileChooser(".");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos CSV (*.csv)", "csv"));
+        
+        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            archivoActual = fileChooser.getSelectedFile();
+            try {
+                miGrafo.cargarArchivo(archivoActual);
+                cambiosGuardados = true;
+                pantalla.setText("ARCHIVO CARGADO: " + archivoActual.getName() + "\n\n");
+                pantalla.append(miGrafo.toString());
+                JOptionPane.showMessageDialog(this, "Archivo cargado correctamente");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
+    private void guardarArchivo() {
+        if (!miGrafo.tieneDatos()) {
+            JOptionPane.showMessageDialog(this, "No hay datos para guardar");
+            return;
+        }
+        
+        if (archivoActual == null) {
+            JFileChooser fileChooser = new JFileChooser(".");
+            fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos CSV (*.csv)", "csv"));
+            
+            if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                archivoActual = fileChooser.getSelectedFile();
+                if (!archivoActual.getName().toLowerCase().endsWith(".csv")) {
+                    archivoActual = new File(archivoActual.getAbsolutePath() + ".csv");
+                }
+            } else {
+                return;
+            }
+        }
+        
+        try {
+            miGrafo.guardarArchivo(archivoActual);
+            cambiosGuardados = true;
+            JOptionPane.showMessageDialog(this, "Archivo guardado correctamente");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al guardar: " + ex.getMessage(),
+                "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
