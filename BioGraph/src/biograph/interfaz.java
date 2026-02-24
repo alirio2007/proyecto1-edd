@@ -138,6 +138,19 @@ public class interfaz extends javax.swing.JFrame {
                 "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    private void detectarComplejos() {
+        // TODO: Programar esta función 
+    }
+
+    private void encontrarRuta() {
+        // TODO: Programar esta función 
+    }
+
+    private void mostrarGrafo() {
+        // TODO: Programar esta función 
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
