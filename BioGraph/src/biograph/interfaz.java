@@ -171,7 +171,53 @@ public class interfaz extends javax.swing.JFrame {
     }
 
     private void encontrarRuta() {
-        // TODO: Programar esta función 
+        if (!miGrafo.tieneDatos()) {
+            JOptionPane.showMessageDialog(this, "No hay datos cargados");
+            return;
+        }
+        
+        JPanel panel = new JPanel(new java.awt.GridLayout(2, 2, 5, 5));
+        JTextField origenField = new JTextField();
+        JTextField destinoField = new JTextField();
+        
+        panel.add(new JLabel("Proteína ORIGEN:"));
+        panel.add(origenField);
+        panel.add(new JLabel("Proteína DESTINO:"));
+        panel.add(destinoField);
+        
+        int result = JOptionPane.showConfirmDialog(this, panel, 
+            "Ruta Metabólica más Corta", JOptionPane.OK_CANCEL_OPTION);
+        
+        if (result == JOptionPane.OK_OPTION) {
+            String origen = origenField.getText().trim();
+            String destino = destinoField.getText().trim();
+            
+            if (origen.isEmpty() || destino.isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                    "Los nombres no pueden estar vacíos",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            Lista<String> ruta = miGrafo.encontrarRutaMasCorta(origen, destino);
+            
+            pantalla.setText("RUTA MÁS CORTA\n");
+            pantalla.append("==============\n\n");
+            pantalla.append("De: " + origen + "\n");
+            pantalla.append("A: " + destino + "\n\n");
+            
+            if (ruta.obtenerInicio() == null) {
+                pantalla.append("No hay ruta disponible");
+            } else {
+                pantalla.append("Ruta:\n");
+                NodoLista<String> nodo = ruta.obtenerInicio();
+                while (nodo != null) {
+                    pantalla.append("  → " + nodo.getDato() + "\n");
+                    nodo = nodo.getSiguiente();
+                }
+            }
+        }  
     }
 
     private void mostrarGrafo() {
