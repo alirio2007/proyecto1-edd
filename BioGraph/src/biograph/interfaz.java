@@ -140,7 +140,34 @@ public class interfaz extends javax.swing.JFrame {
     }
 
     private void detectarComplejos() {
-        // TODO: Programar esta función 
+        if (!miGrafo.tieneDatos()) {
+            JOptionPane.showMessageDialog(this, "No hay datos cargados");
+            return;
+        }
+        
+        Lista<Lista<String>> complejos = miGrafo.encontrarComplejosProteicos();
+        
+        pantalla.setText("COMPLEJOS PROTEICOS DETECTADOS\n");
+        pantalla.append("===============================\n\n");
+        
+        if (complejos.obtenerInicio() == null) {
+            pantalla.append("No se encontraron complejos");
+        } else {
+            NodoLista<Lista<String>> nodo = complejos.obtenerInicio();
+            int num = 1;
+            while (nodo != null) {
+                pantalla.append("Complejo " + num + ":\n");
+                Lista<String> complejo = nodo.getDato();
+                NodoLista<String> prot = complejo.obtenerInicio();
+                while (prot != null) {
+                    pantalla.append("  • " + prot.getDato() + "\n");
+                    prot = prot.getSiguiente();
+                }
+                pantalla.append("\n");
+                nodo = nodo.getSiguiente();
+                num++;
+            }
+        } 
     }
 
     private void encontrarRuta() {
