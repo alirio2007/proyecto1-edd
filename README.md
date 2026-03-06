@@ -6,4 +6,20 @@ En este proyecto, podrá simular que tiene el génoma de un patógeno cargando u
 
 En el siguiente link encontrará el repositorio de Github del proyecto: https://github.com/alirio2007/proyecto1-edd
 
+De igual manera, aquí le dejamos las librerías necesarías para que el proyecto corra, en caso de que no funcione (Las librerías están introducidas en el repositorio, pero en caso de que no corra, desgcárguelas y agréguelas manualmente
+
+# Librerías necesarias para BioGraph
+
+## GraphStream (para visualización)
+- gs-core-2.0.jar
+- gs-ui-swing-2.0.jar
+
+## Dónde descargarlas
+- https://github.com/graphstream/gs-core/releases
+- https://github.com/graphstream/gs-ui-swing/releases
+
+## Instalación
+1. Descargar los archivos .jar
+2. Agregarlos al proyecto en NetBeans
+
 Gracias por su atención.
